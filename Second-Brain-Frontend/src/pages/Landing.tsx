@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { BrainCircuit, Share2, Sparkles, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 
 export function Landing() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Second Brain | Your Digital Mind";
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-zinc-50 relative overflow-hidden flex flex-col">

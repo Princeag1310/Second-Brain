@@ -16,6 +16,7 @@ export function Dashboard() {
   const [isSharing, setIsSharing] = useState(false);
 
   useEffect(() => {
+    document.title = "Dashboard | Second Brain";
     refresh();
   }, [modalOpen, refresh]);
 
