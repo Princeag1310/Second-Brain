@@ -31,7 +31,7 @@ export function Card({ title, link, type, onDelete }: CardProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -4 }}
-            className="group flex flex-col bg-zinc-900/40 border border-white/5 rounded-2xl hover:border-white/10 hover:bg-zinc-900/60 transition-all duration-300 w-full"
+            className="group flex flex-col bg-zinc-900/40 border border-white/5 rounded-2xl hover:border-white/10 hover:bg-zinc-900/60 transition-all duration-300 w-full break-inside-avoid"
         >
             <div className="p-4 flex flex-col">
                 <div className="flex items-start justify-between mb-4">

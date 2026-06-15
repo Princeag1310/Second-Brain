@@ -119,7 +119,7 @@ export function Dashboard() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ staggerChildren: 0.1 }}
-              className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(320px,1fr))] items-start"
+              className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6"
             >
               {filteredContents.map(({ _id, type, link, title }) => (
                 <Card 
