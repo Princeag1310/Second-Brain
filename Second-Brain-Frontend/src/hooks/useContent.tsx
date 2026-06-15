@@ -17,6 +17,7 @@ interface ContentResponse {
 
 export function useContent() {
     const [contents, setContents] = useState<ContentItem[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     function refresh() {
         axios
@@ -27,9 +28,11 @@ export function useContent() {
             })
             .then((response) => {
                 setContents(response.data.content);
+                setIsLoading(false);
             })
             .catch((err) => {
                 console.error("Failed to fetch content", err);
+                setIsLoading(false);
             });
     }
 
@@ -40,5 +43,5 @@ export function useContent() {
         return () => clearInterval(interval);
     }, []);
 
-    return { contents, refresh };
+    return { contents, refresh, isLoading };
 }

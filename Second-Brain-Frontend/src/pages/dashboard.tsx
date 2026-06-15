@@ -6,14 +6,15 @@ import { Button } from '../components/Button';
 import { useContent } from '../hooks/useContent';
 import { BACKEND_URL } from '../config';
 import axios from 'axios';
-import { Plus, Share2 } from 'lucide-react';
+import { Plus, Share2, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState("all");
-  const { contents, refresh } = useContent();
+  const { contents, refresh, isLoading } = useContent();
   const [localContents, setLocalContents] = useState(contents);
+  const [isSharing, setIsSharing] = useState(false);
 
   useEffect(() => {
     setLocalContents(contents);
@@ -42,6 +43,7 @@ export function Dashboard() {
   }
 
   async function handleShare() {
+    setIsSharing(true);
     try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/brain/share`, {
           share: true
@@ -55,6 +57,8 @@ export function Dashboard() {
       alert(`Share link copied to clipboard!\n\n${shareUrl}`);
     } catch (e) {
       console.error("Failed to share brain", e);
+    } finally {
+      setIsSharing(false);
     }
   }
 
@@ -79,6 +83,7 @@ export function Dashboard() {
               variant="secondary" 
               text="Share Brain" 
               startIcon={<Share2 className="w-4 h-4" />} 
+              loading={isSharing}
               className="whitespace-nowrap"
             />
             <Button 
@@ -92,7 +97,12 @@ export function Dashboard() {
         </header>
 
         <main className="p-8">
-          {filteredContents.length === 0 ? (
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center mt-32">
+              <Loader2 className="w-10 h-10 animate-spin text-indigo-500 mb-4" />
+              <p className="text-slate-400 font-medium">Loading your brain...</p>
+            </div>
+          ) : filteredContents.length === 0 ? (
             <div className="flex flex-col items-center justify-center mt-32 text-center">
               <div className="w-24 h-24 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-6">
                 <Plus className="w-10 h-10 text-slate-500" />

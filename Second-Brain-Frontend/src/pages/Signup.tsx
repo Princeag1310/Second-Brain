@@ -17,19 +17,25 @@ export function Signup() {
     async function signup() {
         const username = usernameRef.current?.value;
         const password = passwordRef.current?.value;
-        if (!username || !password) return;
+        
+        if (!username || !password) {
+            alert("Please fill in both username and password");
+            return;
+        }
 
         setLoading(true);
         setError("");
         
         try {
-            await axios.post(BACKEND_URL + "/api/v1/signup", {
+            await axios.post(`${BACKEND_URL}/api/v1/signup`, {
                 username,
                 password
             });
             navigate("/signin");
+            alert("Account created successfully! Please log in.");
         } catch (e: any) {
-            setError(e.response?.data?.message || "Failed to sign up. Username may be taken.");
+            console.error("Sign up failed", e);
+            alert(e.response?.data?.message || "Registration failed. Username might be taken.");
         } finally {
             setLoading(false);
         }
@@ -69,11 +75,11 @@ export function Signup() {
                     </div>
                     <div className="pt-2">
                         <Button 
+                            loading={loading}
                             onClick={signup} 
                             variant="primary" 
                             text="Create Account" 
                             fullWidth 
-                            loading={loading} 
                         />
                     </div>
                 </div>

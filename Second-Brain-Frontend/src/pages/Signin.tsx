@@ -17,13 +17,17 @@ export function Signin() {
     async function signin() {
         const username = usernameRef.current?.value;
         const password = passwordRef.current?.value;
-        if (!username || !password) return;
+        
+        if (!username || !password) {
+            alert("Please fill in both username and password");
+            return;
+        }
 
         setLoading(true);
         setError("");
         
         try {
-            const response = await axios.post(BACKEND_URL + "/api/v1/signin", {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
                 username,
                 password
             });
@@ -31,6 +35,8 @@ export function Signin() {
             localStorage.setItem("token", jwt);
             navigate("/dashboard");
         } catch (e: any) {
+            console.error("Sign in failed", e);
+            alert(e.response?.data?.message || "Invalid credentials. Please try again.");
             setError(e.response?.data?.message || "Failed to sign in. Please check your credentials.");
         } finally {
             setLoading(false);

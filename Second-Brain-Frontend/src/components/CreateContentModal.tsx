@@ -15,15 +15,18 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     const [type, setType] = useState(ContentType.Youtube);
-    const [loading, setLoading] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     async function addContent() {
         const title = titleRef.current?.value;
         const link = linkRef.current?.value;
 
-        if (!title || !link) return;
+        if (!title || !link) {
+            alert("Please fill in all fields");
+            return;
+        }
 
-        setLoading(true);
+        setSubmitting(true);
         try {
             await axios.post(`${BACKEND_URL}/api/v1/content`, {
                 link,
@@ -34,11 +37,17 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                     "authorization": localStorage.getItem("token")
                 }
             });
+
+            // Clear inputs
+            if (titleRef.current) titleRef.current.value = "";
+            if (linkRef.current) linkRef.current.value = "";
+            
             onClose();
         } catch (e) {
             console.error("Failed to add content", e);
+            alert("Failed to add content. Please try again.");
         } finally {
-            setLoading(false);
+            setSubmitting(false);
         }
     }
 
@@ -113,9 +122,9 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                             />
                             <Button 
                                 variant="primary" 
-                                text="Save Content" 
+                                text="Add Content" 
                                 onClick={addContent} 
-                                loading={loading}
+                                loading={submitting}
                             />
                         </div>
                     </motion.div>
