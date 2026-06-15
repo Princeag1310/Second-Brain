@@ -6,7 +6,7 @@ export interface ContentItem {
     _id: string;
     title: string;
     link: string;
-    type: string;
+    type: "youtube" | "twitter" | string;
     userId: string;        // or full object if populated
     tags: string[];        // or tag objects if populated
 }

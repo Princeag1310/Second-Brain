@@ -3,11 +3,16 @@ import express from 'express';
 import mongoose from 'mongoose'; 
 import jwt from 'jsonwebtoken';
 import { UserModel, ContentModel, LinkModel } from './db';
+import { z } from 'zod';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 
 import { JWT_PASSWORD } from './config';
 import { userMiddleware } from './middleware';
 import { random } from './utils';
 import cors from "cors";
+
+dotenv.config();
 
 
 const app = express();
@@ -16,51 +21,64 @@ app.use(express.json());
 
 app.use(cors());
 
-app.post("/api/v1/signup", async (req, res) => {
-    // TODO: zod validation, hash the password
-    const username = req.body.username;
-    const password = req.body.password;
+const signupSchema = z.object({
+    username: z.string().min(3).max(20),
+    password: z.string().min(5).max(40)
+});
 
-    try{
+app.post("/api/v1/signup", async (req, res) => {
+    const parsedData = signupSchema.safeParse(req.body);
+    if (!parsedData.success) {
+        res.status(400).json({
+            message: "Invalid inputs",
+            errors: parsedData.error
+        });
+        return;
+    }
+
+    const { username, password } = parsedData.data;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
         await UserModel.create({
             username: username,
-            password: password
-        })
+            password: hashedPassword
+        });
 
         res.json({
             message: "User signed up"
-        })
-    }
-    catch(e){
+        });
+    } catch(e) {
         res.status(411).json({
             message: "User already exists"
-        })
+        });
     }
-    
-
-})
+});
 
 app.post("/api/v1/signin", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    const existingUser = await UserModel.findOne({
-        username,
-        password
-    })
-    if(existingUser){
-        const token = jwt.sign({
-            id: existingUser._id
-        }, JWT_PASSWORD)
-        res.json({
-            token
-        })
+    
+    try {
+        const existingUser = await UserModel.findOne({ username });
+        if(!existingUser || !existingUser.password) {
+            res.status(403).json({ message: "Incorrect Credentials" });
+            return;
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+        if (isPasswordValid) {
+            const token = jwt.sign({
+                id: existingUser._id
+            }, JWT_PASSWORD);
+            res.json({ token });
+        } else {
+            res.status(403).json({ message: "Incorrect Credentials" });
+        }
+    } catch(e) {
+        res.status(500).json({ message: "Internal server error" });
     }
-    else{
-        res.status(403).json({
-            message: "Incorrect Credentials"
-        })
-    }
-})
+});
 
 app.post("/api/v1/content", userMiddleware, async (req, res) => {
     const link = req.body.link;
@@ -169,5 +187,8 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
 })
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server is running on port ${port}`));
-//cloud.mongodb.com
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
+
+export default app;

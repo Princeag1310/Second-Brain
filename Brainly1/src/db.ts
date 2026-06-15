@@ -3,8 +3,19 @@
 
 import mongoose, { Schema, model } from 'mongoose';
 
-mongoose.connect(process.env.MONGO_URI || "mongodb+srv://princeagrawal1013:Prince%401234@prince-agrawal.pzlfdls.mongodb.net/brainly")
+import dotenv from "dotenv";
+dotenv.config();
 
+// Fix mongoose warning about strict query
+mongoose.set("strictQuery", false);
+
+const mongoURI = process.env.MONGO_URI;
+
+if (!mongoURI) {
+    throw new Error("MONGO_URI environment variable is not set");
+}
+
+mongoose.connect(mongoURI);
 const UserSchema = new Schema({
     username: {type: String, unique: true},
     password: String
