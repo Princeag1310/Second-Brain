@@ -1,6 +1,6 @@
-# Brainly
+# Second-Brain
 
-A full-stack note/content management application by [Princeag1310](https://github.com/Princeag1310), featuring a modern React-Typescript-Vite frontend and a Node.js + Express + MongoDB backend. Brainly lets users securely sign up, save and tag content, and generate a shareable “Second Brain” page.
+A full-stack note/content management application by [Princeag1310](https://github.com/Princeag1310), featuring a modern React-Typescript-Vite frontend and a Node.js + Express + MongoDB backend. Second-Brain-Frontend lets users securely sign up, save and tag content, and generate a shareable “Second Brain” page.
 
 ---
 
@@ -8,11 +8,11 @@ A full-stack note/content management application by [Princeag1310](https://githu
 
 - [Features](#features)
 - [Project Structure](#project-structure)
-- [Backend (Brainly1)](#backend-brainly1)
+- [Backend (Second-Brain-Backend)](#backend-brainly1)
   - [API Endpoints](#api-endpoints)
   - [Database Models](#database-models)
   - [Environment Variables](#environment-variables)
-- [Frontend (Brainly)](#frontend-brainly)
+- [Frontend (Second-Brain-Frontend)](#frontend-brainly)
 - [Getting Started](#getting-started)
 - [Scripts](#scripts)
 - [Deployment](#deployment)
@@ -34,8 +34,8 @@ A full-stack note/content management application by [Princeag1310](https://githu
 
 ## Project Structure
 
-Brainly/ # Frontend (React, Vite, Tailwind, etc.)
-Brainly1/ # Backend (Node.js/Express/MongoDB/TypeScript)
+Second-Brain-Frontend/ # Frontend (React, Vite, Tailwind, etc.)
+Second-Brain-Backend/ # Backend (Node.js/Express/MongoDB/TypeScript)
 .gitignore
 README.md
 
@@ -43,7 +43,7 @@ text
 
 ---
 
-## Backend (Brainly1)
+## Backend (Second-Brain-Backend)
 
 - Node.js + Express server written in TypeScript
 - MongoDB (with Mongoose) for persistence
@@ -80,7 +80,7 @@ text
 
 ---
 
-## Frontend (Brainly)
+## Frontend (Second-Brain-Frontend)
 
 - Built with React, TypeScript, Vite, and Tailwind CSS
 - App structure includes:
@@ -106,32 +106,32 @@ text
 
 1. **Clone the repo:**
     ```
-    git clone https://github.com/Princeag1310/Brainly.git
+    git clone https://github.com/Princeag1310/Second-Brain.git
     ```
 
 2. **Install frontend dependencies:**
     ```
-    cd Brainly/Brainly
+    cd Second-Brain-Frontend
     npm install
     ```
 
 3. **Install backend dependencies:**
     ```
-    cd ../Brainly1
+    cd ../Second-Brain-Backend
     npm install
     ```
 
 #### Run in Development
 
 **Frontend:**
-cd Brainly
+cd Second-Brain-Frontend
 npm run dev
 
 text
 > Defaults to http://localhost:5173
 
 **Backend:**
-cd Brainly1
+cd Second-Brain-Backend
 npx ts-node src/index.ts
 
 text
@@ -167,4 +167,4 @@ text
 
 ---
 
-**Enjoy organizing, tagging, and sharing your knowledge—your own “Second Brain” with Brainly!**
+**Enjoy organizing, tagging, and sharing your knowledge—your own “Second Brain” with Second-Brain!**
