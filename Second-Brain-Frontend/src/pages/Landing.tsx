@@ -73,14 +73,8 @@ export function Landing() {
         >
           <Button 
             variant="primary" 
-            text="Start Building for Free" 
+            text="Get Started" 
             onClick={() => navigate("/signup")}
-            className="px-8 py-4 text-lg"
-          />
-          <Button 
-            variant="secondary" 
-            text="View an Example" 
-            onClick={() => navigate("/dashboard")}
             className="px-8 py-4 text-lg"
           />
         </motion.div>
