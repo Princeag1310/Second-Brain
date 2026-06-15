@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 
 const signupSchema = z.object({
-    username: z.string().min(3).max(20),
+    username: z.string().min(3).max(100),
     password: z.string().min(5).max(40)
 });
 
