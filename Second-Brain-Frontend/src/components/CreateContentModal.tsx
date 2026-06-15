@@ -8,7 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 enum ContentType {
     Youtube = "youtube",
-    Twitter = "twitter"
+    Twitter = "twitter",
+    Link = "link"
 }
 
 export function CreateContentModal({ open, onClose }: { open: boolean, onClose: () => void }) {
@@ -23,6 +24,21 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
 
         if (!title || !link) {
             alert("Please fill in all fields");
+            return;
+        }
+
+        if (type === ContentType.Youtube && !link.includes("youtube.com") && !link.includes("youtu.be")) {
+            alert("Please enter a valid YouTube link.");
+            return;
+        }
+
+        if (type === ContentType.Twitter && !link.includes("twitter.com") && !link.includes("x.com")) {
+            alert("Please enter a valid X (Twitter) link.");
+            return;
+        }
+
+        if (type === ContentType.Link && !link.startsWith("http")) {
+            alert("Please enter a valid URL starting with http:// or https://");
             return;
         }
 
@@ -96,7 +112,7 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
 
                             <div>
                                 <label className="block text-sm font-medium text-zinc-400 mb-2">Content Type</label>
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-3 gap-3">
                                     <Button 
                                         text="YouTube" 
                                         variant={type === ContentType.Youtube ? "primary" : "secondary"} 
@@ -107,6 +123,12 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                                         text="X" 
                                         variant={type === ContentType.Twitter ? "primary" : "secondary"} 
                                         onClick={() => setType(ContentType.Twitter)}
+                                        fullWidth
+                                    />
+                                    <Button 
+                                        text="Link" 
+                                        variant={type === ContentType.Link ? "primary" : "secondary"} 
+                                        onClick={() => setType(ContentType.Link)}
                                         fullWidth
                                     />
                                 </div>

@@ -1,4 +1,4 @@
-import { BrainCircuit, LogOut, LayoutGrid } from "lucide-react";
+import { BrainCircuit, LogOut, LayoutGrid, Link2 } from "lucide-react";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { SidebarItem } from "./SidebarItem";
@@ -38,6 +38,12 @@ export function Sidebar({ filter, setFilter }: { filter: string, setFilter: (val
                     icon={<div className="w-5 h-5 flex items-center justify-center"><YoutubeIcon /></div>} 
                     active={filter === "youtube"}
                     onClick={() => setFilter("youtube")}
+                />
+                <SidebarItem 
+                    text="Links" 
+                    icon={<Link2 className="w-5 h-5" />} 
+                    active={filter === "link"}
+                    onClick={() => setFilter("link")}
                 />
             </div>
 
