@@ -13,12 +13,19 @@ export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState("all");
   const { contents, refresh } = useContent();
+  const [localContents, setLocalContents] = useState(contents);
+
+  useEffect(() => {
+    setLocalContents(contents);
+  }, [contents]);
 
   useEffect(() => {
     refresh();
   }, [modalOpen, refresh]);
 
   async function handleDelete(contentId: string) {
+    // Optimistic UI update
+    setLocalContents(prev => prev.filter(c => c._id !== contentId));
     try {
       await axios.delete(`${BACKEND_URL}/api/v1/content`, {
         data: { contentId },
@@ -29,6 +36,8 @@ export function Dashboard() {
       refresh();
     } catch (e) {
       console.error("Failed to delete content", e);
+      alert("Failed to delete content. Please ensure your backend is updated and running.");
+      refresh(); // Revert optimistic update
     }
   }
 
@@ -49,7 +58,7 @@ export function Dashboard() {
     }
   }
 
-  const filteredContents = contents.filter(c => filter === "all" || c.type === filter);
+  const filteredContents = localContents.filter((c: any) => filter === "all" || c.type === filter);
 
   return (
     <div className="flex bg-slate-950 min-h-screen text-slate-50 font-sans selection:bg-indigo-500/30">

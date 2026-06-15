@@ -84,8 +84,8 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                         </div>
                     )}
                     {isTwitter && (
-                        <div className="w-full flex justify-center overflow-visible">
-                            <blockquote className="twitter-tweet" data-theme="dark" data-width="100%">
+                        <div className="w-full flex justify-center overflow-hidden rounded-xl">
+                            <blockquote className="twitter-tweet !m-0 w-full" data-theme="dark" style={{ width: '100%', maxWidth: '100%' }}>
                                 <a href={link.replace("x.com", "twitter.com")}></a>
                             </blockquote>
                         </div>
