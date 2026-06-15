@@ -1,4 +1,5 @@
-import { ExternalLink, Play, Trash2 } from "lucide-react";
+import { ExternalLink, Trash2 } from "lucide-react";
+import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { motion } from "framer-motion";
 import { cn } from "../utils/cn";
@@ -37,11 +38,11 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                     <div className="flex items-center gap-3 overflow-hidden">
                         <div className={cn(
                             "flex items-center justify-center w-10 h-10 rounded-xl",
-                            isYoutube ? "bg-red-500/10 text-red-500" : 
-                            isTwitter ? "bg-sky-500/10 text-sky-500" : 
+                            isYoutube ? "bg-red-500/10" : 
+                            isTwitter ? "bg-white/10 text-white" : 
                             "bg-white/10 text-zinc-300"
                         )}>
-                            {isYoutube ? <Play className="w-5 h-5 fill-current" /> : 
+                            {isYoutube ? <YoutubeIcon className="w-6 h-6" /> : 
                              isTwitter ? <TwitterIcon /> : 
                              <ExternalLink className="w-5 h-5" />}
                         </div>

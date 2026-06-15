@@ -35,7 +35,7 @@ export function Sidebar({ filter, setFilter }: { filter: string, setFilter: (val
                 />
                 <SidebarItem 
                     text="YouTube" 
-                    icon={<div className="w-5 h-5"><YoutubeIcon /></div>} 
+                    icon={<div className="w-5 h-5 flex items-center justify-center"><YoutubeIcon /></div>} 
                     active={filter === "youtube"}
                     onClick={() => setFilter("youtube")}
                 />
