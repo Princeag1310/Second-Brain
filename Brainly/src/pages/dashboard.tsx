@@ -39,7 +39,7 @@ export function Dashboard() {
                     "authorization": localStorage.getItem("token")
                 }
             })
-            const shareUrl = `http://localhost:5173/share/${response.data.hash}`
+            const shareUrl = `http://localhost:5173/share/${(response.data as any).hash}`
             alert(shareUrl)
         }} variant = "secondary" text = "Share Brain" startIcon={<ShareIcon />} />
       </div>
@@ -50,7 +50,7 @@ export function Dashboard() {
         {contents.map(({type, link, title}) => 
             <Card 
             title = {title} 
-            type = {type} 
+            type = {type as "youtube" | "twitter"} 
             link = {link} 
             />
         )}

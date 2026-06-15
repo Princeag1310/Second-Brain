@@ -3,7 +3,7 @@
 
 import mongoose, { Schema, model } from 'mongoose';
 
-mongoose.connect("mongodb+srv://princeagrawal1013:Prince%401234@prince-agrawal.pzlfdls.mongodb.net/brainly")
+mongoose.connect(process.env.MONGO_URI || "mongodb+srv://princeagrawal1013:Prince%401234@prince-agrawal.pzlfdls.mongodb.net/brainly")
 
 const UserSchema = new Schema({
     username: {type: String, unique: true},

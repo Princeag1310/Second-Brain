@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 export function Signin(){
 
-    const usernameRef = useRef<HTMLInputElement>();
-    const passwordRef = useRef<HTMLInputElement>();
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
 
@@ -20,7 +20,7 @@ export function Signin(){
                 username,
                 password
         })
-        const jwt = response.data.token;
+        const jwt = (response.data as any).token;
         localStorage.setItem("token", jwt);
         navigate("/dashboard");
         //redirect the user to the dashboard
