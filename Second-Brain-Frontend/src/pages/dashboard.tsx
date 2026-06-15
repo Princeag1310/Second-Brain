@@ -12,21 +12,17 @@ import { motion } from 'framer-motion';
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState("all");
-  const { contents, refresh, isLoading } = useContent();
-  const [localContents, setLocalContents] = useState(contents);
+  const { contents, setContents, refresh, isLoading } = useContent();
   const [isSharing, setIsSharing] = useState(false);
-
-  useEffect(() => {
-    setLocalContents(contents);
-  }, [contents]);
 
   useEffect(() => {
     refresh();
   }, [modalOpen, refresh]);
 
   async function handleDelete(contentId: string) {
+    const originalContents = [...contents];
     // Optimistic UI update
-    setLocalContents(prev => prev.filter(c => c._id !== contentId));
+    setContents(contents.filter(c => c._id !== contentId));
     try {
       await axios.delete(`${BACKEND_URL}/api/v1/content`, {
         data: { contentId },
@@ -34,11 +30,11 @@ export function Dashboard() {
           authorization: localStorage.getItem("token")
         }
       } as any);
-      refresh();
+      // Deletion successful, UI is already updated
     } catch (e) {
       console.error("Failed to delete content", e);
       alert("Failed to delete content. Please ensure your backend is updated and running.");
-      refresh(); // Revert optimistic update
+      setContents(originalContents); // Revert optimistic update
     }
   }
 
@@ -62,7 +58,7 @@ export function Dashboard() {
     }
   }
 
-  const filteredContents = localContents.filter((c: any) => filter === "all" || c.type === filter);
+  const filteredContents = contents.filter((c: any) => filter === "all" || c.type === filter);
 
   return (
     <div className="flex bg-slate-950 min-h-screen text-slate-50 font-sans selection:bg-indigo-500/30">
