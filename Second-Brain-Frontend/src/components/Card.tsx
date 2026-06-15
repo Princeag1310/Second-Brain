@@ -30,7 +30,7 @@ export function Card({ title, link, type, onDelete }: CardProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -4 }}
-            className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-lg hover:shadow-indigo-500/10 hover:border-slate-700 transition-all duration-300 w-full"
+            className="group flex flex-col bg-zinc-900/40 border border-white/5 rounded-2xl hover:border-white/10 hover:bg-zinc-900/60 transition-all duration-300 w-full"
         >
             <div className="p-4 flex flex-col">
                 <div className="flex items-start justify-between mb-4">
@@ -39,13 +39,13 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                             "flex items-center justify-center w-10 h-10 rounded-xl",
                             isYoutube ? "bg-red-500/10 text-red-500" : 
                             isTwitter ? "bg-sky-500/10 text-sky-500" : 
-                            "bg-indigo-500/10 text-indigo-500"
+                            "bg-white/10 text-zinc-300"
                         )}>
                             {isYoutube ? <Play className="w-5 h-5 fill-current" /> : 
                              isTwitter ? <TwitterIcon /> : 
                              <ExternalLink className="w-5 h-5" />}
                         </div>
-                        <h3 className="font-semibold text-slate-200 truncate pr-2 text-lg">
+                        <h3 className="font-semibold text-zinc-100 truncate pr-2 text-lg">
                             {title}
                         </h3>
                     </div>
@@ -55,14 +55,14 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                             href={link} 
                             target="_blank" 
                             rel="noreferrer"
-                            className="p-2 text-slate-400 hover:text-indigo-400 hover:bg-slate-800 rounded-lg transition-colors"
+                            className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                         >
                             <ExternalLink className="w-4 h-4" />
                         </a>
                         {onDelete && (
                             <button 
                                 onClick={onDelete}
-                                className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+                                className="p-2 text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
@@ -72,7 +72,7 @@ export function Card({ title, link, type, onDelete }: CardProps) {
 
                 <div className="w-full">
                     {isYoutube && (
-                        <div className="rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative w-full">
+                        <div className="rounded-xl overflow-hidden bg-black/50 border border-white/5 relative w-full">
                             <iframe 
                                 className="w-full aspect-video" 
                                 src={link.replace("watch?v=", "embed/")} 
@@ -91,9 +91,9 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                         </div>
                     )}
                     {!isYoutube && !isTwitter && (
-                        <div className="rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative w-full p-6 flex flex-col items-center justify-center min-h-[200px] text-center text-slate-500 space-y-3">
+                        <div className="rounded-xl overflow-hidden bg-black/50 border border-white/5 relative w-full p-6 flex flex-col items-center justify-center min-h-[200px] text-center text-zinc-500 space-y-3">
                             <ExternalLink className="w-10 h-10 opacity-20" />
-                            <a href={link} target="_blank" rel="noreferrer" className="text-sm hover:text-indigo-400 transition-colors break-all line-clamp-2">
+                            <a href={link} target="_blank" rel="noreferrer" className="text-sm hover:text-zinc-300 transition-colors break-all line-clamp-2">
                                 {link}
                             </a>
                         </div>

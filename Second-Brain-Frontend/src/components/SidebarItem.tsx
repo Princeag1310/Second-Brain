@@ -18,13 +18,13 @@ export function SidebarItem({
             className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group text-sm font-medium",
                 active 
-                    ? "bg-indigo-500/10 text-indigo-400" 
-                    : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    ? "bg-white/10 text-white" 
+                    : "text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
             )}
         >
             <div className={cn(
                 "transition-colors",
-                active ? "text-indigo-400" : "text-slate-500 group-hover:text-slate-300"
+                active ? "text-white" : "text-zinc-500 group-hover:text-zinc-300"
             )}>
                 {icon}
             </div>

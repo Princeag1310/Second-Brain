@@ -61,7 +61,7 @@ export function Dashboard() {
   const filteredContents = contents.filter((c: any) => filter === "all" || c.type === filter);
 
   return (
-    <div className="flex bg-slate-950 min-h-screen text-slate-50 font-sans selection:bg-indigo-500/30">
+    <div className="flex bg-black min-h-screen text-zinc-50 font-sans selection:bg-zinc-800 selection:text-white">
       <Sidebar filter={filter} setFilter={setFilter} />
       
       <div className="flex-1 ml-72">
@@ -70,7 +70,7 @@ export function Dashboard() {
           onClose={() => setModalOpen(false)} 
         />
         
-        <header className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-4 md:px-8 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <header className="sticky top-0 z-10 bg-black/80 backdrop-blur-md border-b border-white/5 px-4 md:px-8 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <h1 className="text-2xl font-bold tracking-tight">Your Brain</h1>
           
           <div className="flex items-center gap-3 flex-wrap">
@@ -95,16 +95,16 @@ export function Dashboard() {
         <main className="p-8">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center mt-32">
-              <Loader2 className="w-10 h-10 animate-spin text-indigo-500 mb-4" />
-              <p className="text-slate-400 font-medium">Loading your brain...</p>
+              <Loader2 className="w-10 h-10 animate-spin text-white mb-4" />
+              <p className="text-zinc-400 font-medium">Loading your brain...</p>
             </div>
           ) : filteredContents.length === 0 ? (
             <div className="flex flex-col items-center justify-center mt-32 text-center">
-              <div className="w-24 h-24 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-6">
-                <Plus className="w-10 h-10 text-slate-500" />
+              <div className="w-24 h-24 rounded-full bg-zinc-900/50 border border-dashed border-zinc-800 flex items-center justify-center mb-6">
+                <Plus className="w-10 h-10 text-zinc-600" />
               </div>
-              <h2 className="text-xl font-semibold text-slate-200 mb-2">It's empty in here</h2>
-              <p className="text-slate-400 mb-6 max-w-sm">
+              <h2 className="text-xl font-semibold text-zinc-100 mb-2">It's empty in here</h2>
+              <p className="text-zinc-400 mb-6 max-w-sm">
                 {filter === "all" ? "Start building your second brain by adding links to your favorite Youtube videos or Tweets." : `You don't have any ${filter === 'twitter' ? 'X' : 'YouTube'} content yet.`}
               </p>
               <Button 

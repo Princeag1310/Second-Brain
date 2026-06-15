@@ -42,13 +42,13 @@ export function Signup() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center relative overflow-hidden p-4">
+        <div className="min-h-screen bg-black flex flex-col justify-center items-center relative overflow-hidden p-4">
             <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
             
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative z-10"
+                className="w-full max-w-md bg-zinc-950 border border-white/5 rounded-3xl p-8 shadow-2xl relative z-10"
             >
                 <div className="flex flex-col items-center mb-8">
                     <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 mb-4">

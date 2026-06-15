@@ -7,7 +7,7 @@ export function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 relative overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-black text-zinc-50 relative overflow-hidden flex flex-col">
       {/* Background Glowing Blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-600/20 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none" />
@@ -87,7 +87,7 @@ export function Landing() {
       </main>
 
       {/* Features Grid */}
-      <section className="bg-slate-900/50 border-t border-slate-800/50 py-24 z-10">
+      <section className="bg-zinc-950/50 border-t border-white/5 py-24 z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -113,9 +113,9 @@ export function Landing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-slate-800/30 border border-slate-700/50 hover:bg-slate-800/50 transition-colors"
+                className="p-6 rounded-2xl bg-zinc-950/30 border border-white/5 hover:bg-zinc-900/50 transition-colors"
               >
-                <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center mb-4 border border-slate-700">
+                <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center mb-4 border border-white/5">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-slate-200">{feature.title}</h3>

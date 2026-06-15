@@ -61,7 +61,7 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
                     />
 
                     {/* Modal */}
@@ -69,14 +69,14 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden"
+                        className="relative w-full max-w-md bg-zinc-950 border border-white/5 rounded-2xl shadow-2xl overflow-hidden"
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between p-6 border-b border-slate-800">
-                            <h2 className="text-xl font-semibold text-slate-100">Add New Content</h2>
+                        <div className="flex items-center justify-between p-6 border-b border-white/5">
+                            <h2 className="text-xl font-semibold text-zinc-50">Add New Content</h2>
                             <button
                                 onClick={onClose}
-                                className="p-2 text-slate-400 hover:text-slate-100 hover:bg-slate-800 rounded-lg transition-colors"
+                                className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -85,17 +85,17 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                         {/* Body */}
                         <div className="p-6 space-y-5">
                             <div>
-                                <label className="block text-sm font-medium text-slate-400 mb-1.5">Title</label>
+                                <label className="block text-sm font-medium text-zinc-400 mb-1.5">Title</label>
                                 <Input reference={titleRef} placeholder="e.g., My favorite tech talk" />
                             </div>
                             
                             <div>
-                                <label className="block text-sm font-medium text-slate-400 mb-1.5">Link</label>
+                                <label className="block text-sm font-medium text-zinc-400 mb-1.5">Link</label>
                                 <Input reference={linkRef} placeholder="https://..." />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-400 mb-2">Content Type</label>
+                                <label className="block text-sm font-medium text-zinc-400 mb-2">Content Type</label>
                                 <div className="grid grid-cols-2 gap-3">
                                     <Button 
                                         text="YouTube" 
@@ -114,7 +114,7 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                         </div>
 
                         {/* Footer */}
-                        <div className="p-6 border-t border-slate-800 bg-slate-900/50 flex justify-end gap-3">
+                        <div className="p-6 border-t border-white/5 bg-zinc-950 flex justify-end gap-3">
                             <Button 
                                 variant="ghost" 
                                 text="Cancel" 

@@ -8,13 +8,13 @@ export function Sidebar({ filter, setFilter }: { filter: string, setFilter: (val
     const navigate = useNavigate();
 
     return (
-        <div className="h-screen bg-slate-950 border-r border-slate-800 w-72 fixed left-0 top-0 flex flex-col z-20">
+        <div className="h-screen bg-black/50 backdrop-blur-xl border-r border-white/5 w-72 fixed left-0 top-0 flex flex-col z-20">
             {/* Logo Area */}
             <div className="flex items-center gap-3 px-8 py-8 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 shadow-[0_0_15px_rgba(79,70,229,0.15)]">
-                    <BrainCircuit className="w-6 h-6 text-indigo-400" />
+                <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                    <BrainCircuit className="w-6 h-6" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-slate-100">
+                <span className="text-xl font-bold tracking-tight text-white">
                     Second Brain
                 </span>
             </div>
@@ -42,7 +42,7 @@ export function Sidebar({ filter, setFilter }: { filter: string, setFilter: (val
             </div>
 
             {/* Bottom Actions */}
-            <div className="p-4 border-t border-slate-800">
+            <div className="p-4 border-t border-white/5">
                 <SidebarItem 
                     text="Logout" 
                     icon={<LogOut className="w-5 h-5" />} 
