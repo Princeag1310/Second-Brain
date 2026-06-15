@@ -11,6 +11,7 @@ import { JWT_PASSWORD } from './config';
 import { userMiddleware } from './middleware';
 import { random } from './utils';
 import cors from "cors";
+import { getLinkPreview } from 'link-preview-js';
 
 dotenv.config();
 
@@ -185,6 +186,25 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
         content: content
     })
 })
+
+app.post("/api/v1/preview", async (req, res) => {
+    const url = req.body.url;
+    if (!url) {
+        res.status(400).json({ message: "URL is required" });
+        return;
+    }
+    
+    try {
+        const preview = await getLinkPreview(url, {
+            timeout: 5000,
+            followRedirects: 'follow'
+        });
+        res.json(preview);
+    } catch (e) {
+        console.error("Preview fetch failed for:", url, e);
+        res.status(500).json({ message: "Failed to fetch preview" });
+    }
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
