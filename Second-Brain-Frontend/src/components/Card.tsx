@@ -3,7 +3,9 @@ import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { motion } from "framer-motion";
 import { cn } from "../utils/cn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 interface CardProps {
     title: string;
@@ -16,6 +18,10 @@ export function Card({ title, link, type, onDelete }: CardProps) {
     const isYoutube = type === "youtube";
     const isTwitter = type === "twitter";
 
+    const isLink = !isYoutube && !isTwitter;
+    const [previewData, setPreviewData] = useState<any>(null);
+    const [loadingPreview, setLoadingPreview] = useState(false);
+
     useEffect(() => {
         if (isTwitter) {
             // @ts-ignore
@@ -25,6 +31,22 @@ export function Card({ title, link, type, onDelete }: CardProps) {
             }
         }
     }, [isTwitter, link]);
+
+    useEffect(() => {
+        if (isLink) {
+            setLoadingPreview(true);
+            const fetchPreview = async () => {
+                try {
+                    const res = await axios.post(`${BACKEND_URL}/api/v1/preview`, { url: link });
+                    setPreviewData(res.data);
+                } catch (err) {
+                    console.error("Failed to fetch preview", err);
+                }
+                setLoadingPreview(false);
+            };
+            fetchPreview();
+        }
+    }, [isLink, link]);
 
     return (
         <motion.div 
@@ -91,12 +113,51 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                             </blockquote>
                         </div>
                     )}
-                    {!isYoutube && !isTwitter && (
-                        <div className="rounded-xl overflow-hidden bg-black/50 border border-white/5 relative w-full p-6 flex flex-col items-center justify-center min-h-[200px] text-center text-zinc-500 space-y-3">
-                            <ExternalLink className="w-10 h-10 opacity-20" />
-                            <a href={link} target="_blank" rel="noreferrer" className="text-sm hover:text-zinc-300 transition-colors break-all line-clamp-2">
-                                {link}
-                            </a>
+                    {isLink && (
+                        <div className="rounded-xl overflow-hidden bg-black/50 border border-white/5 relative w-full flex flex-col group/preview hover:border-white/10 transition-colors">
+                            {loadingPreview ? (
+                                <div className="animate-pulse">
+                                    <div className="w-full h-40 bg-white/5" />
+                                    <div className="p-4 space-y-3">
+                                        <div className="h-4 bg-white/5 rounded w-3/4" />
+                                        <div className="h-3 bg-white/5 rounded w-1/2" />
+                                    </div>
+                                </div>
+                            ) : previewData ? (
+                                <a href={link} target="_blank" rel="noreferrer" className="block w-full">
+                                    {previewData.images && previewData.images.length > 0 && (
+                                        <div className="w-full h-40 overflow-hidden bg-zinc-900">
+                                            <img src={previewData.images[0]} alt="Preview" className="w-full h-full object-cover group-hover/preview:scale-105 transition-transform duration-500" />
+                                        </div>
+                                    )}
+                                    <div className="p-4 flex flex-col gap-1.5">
+                                        <h4 className="text-zinc-100 font-medium text-sm line-clamp-2 leading-snug">
+                                            {previewData.title || title}
+                                        </h4>
+                                        {previewData.description && (
+                                            <p className="text-zinc-400 text-xs line-clamp-2">
+                                                {previewData.description}
+                                            </p>
+                                        )}
+                                        <div className="flex items-center gap-1 mt-2 text-zinc-500">
+                                            <ExternalLink className="w-3 h-3" />
+                                            <span className="text-xs truncate">
+                                                {(() => {
+                                                    try { return new URL(link).hostname; } 
+                                                    catch { return link; }
+                                                })()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            ) : (
+                                <div className="p-6 flex flex-col items-center justify-center min-h-[200px] text-center text-zinc-500 space-y-3">
+                                    <ExternalLink className="w-10 h-10 opacity-20" />
+                                    <a href={link} target="_blank" rel="noreferrer" className="text-sm hover:text-zinc-300 transition-colors break-all line-clamp-2">
+                                        {link}
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
