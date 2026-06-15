@@ -30,9 +30,9 @@ export function Card({ title, link, type, onDelete }: CardProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -4 }}
-            className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-indigo-500/10 hover:border-slate-700 transition-all duration-300 w-full"
+            className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-lg hover:shadow-indigo-500/10 hover:border-slate-700 transition-all duration-300 w-full"
         >
-            <div className="p-5 flex flex-col">
+            <div className="p-4 flex flex-col">
                 <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3 overflow-hidden">
                         <div className={cn(
@@ -84,8 +84,8 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                         </div>
                     )}
                     {isTwitter && (
-                        <div className="w-full flex justify-center">
-                            <blockquote className="twitter-tweet !m-0" data-theme="dark">
+                        <div className="w-full flex justify-center overflow-visible">
+                            <blockquote className="twitter-tweet" data-theme="dark" data-width="100%">
                                 <a href={link.replace("x.com", "twitter.com")}></a>
                             </blockquote>
                         </div>
