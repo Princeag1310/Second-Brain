@@ -1,170 +1,134 @@
-# Second-Brain
+# Second-Brain 🧠
 
-A full-stack note/content management application by [Princeag1310](https://github.com/Princeag1310), featuring a modern React-Typescript-Vite frontend and a Node.js + Express + MongoDB backend. Second-Brain-Frontend lets users securely sign up, save and tag content, and generate a shareable “Second Brain” page.
+A beautiful, high-performance full-stack web application designed to help you organize your digital life. 
+Save links, embed videos, store tweets, and share your entire "Second Brain" with the world.
 
----
-
-## Table of Contents
-
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Backend (Second-Brain-Backend)](#backend-brainly1)
-  - [API Endpoints](#api-endpoints)
-  - [Database Models](#database-models)
-  - [Environment Variables](#environment-variables)
-- [Frontend (Second-Brain-Frontend)](#frontend-brainly)
-- [Getting Started](#getting-started)
-- [Scripts](#scripts)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+Built by [Princeag1310](https://github.com/Princeag1310).
 
 ---
 
-## Features
+## 🌟 Features
 
-- 📝 User authentication and JWT-based session management
-- 📄 Add, view, and delete personal content with title, link, type, and tags
-- 🔗 Get a public, shareable “Second Brain” link for your best content
-- 🚀 Modern, fast frontend (React, Vite, TailwindCSS)
-- ☁️ Persistent backend with MongoDB Atlas
-- 🧩 Modular, extensible codebase
-
----
-
-## Project Structure
-
-Second-Brain-Frontend/ # Frontend (React, Vite, Tailwind, etc.)
-Second-Brain-Backend/ # Backend (Node.js/Express/MongoDB/TypeScript)
-.gitignore
-README.md
-
-text
+- **Rich Content Management:** Save standard links, YouTube videos, and X (Twitter) posts.
+- **Native Embeds:** YouTube videos and Tweets render as fully interactive native embeds.
+- **Rich Link Previews:** Generic URLs are automatically scraped to extract Open Graph metadata, rendering beautiful visual preview cards with images and descriptions.
+- **Smart Auto-Categorization:** Accidentally pasted a YouTube link as a standard link? The app automatically detects the URL and upgrades it to the correct content type.
+- **Masonry Grid Layout:** A seamless Pinterest-style layout that perfectly handles tall Twitter embeds without breaking the grid or causing gaps.
+- **Premium Dark UI:** Designed with a stunning minimalist dark theme featuring glassmorphism, subtle micro-animations, and responsive design.
+- **Shareable Brain:** Generate a secure, read-only public link to share your curated content library with others.
+- **Secure Authentication:** Robust JWT-based session management and encrypted passwords.
 
 ---
 
-## Backend (Second-Brain-Backend)
+## 🏗️ Project Structure
 
-- Node.js + Express server written in TypeScript
-- MongoDB (with Mongoose) for persistence
-- JWT authentication middleware
-- API logic in `/src/index.ts`
-- Models in `/src/db.ts`
-- Config and helpers in `/src/config.ts`, `/src/utils.ts`
+This is a monolithic repository containing both the frontend and backend applications:
 
-### API Endpoints
-
-| Method | Route                       | Auth   | Description                                         |
-|--------|-----------------------------|--------|-----------------------------------------------------|
-| POST   | `/api/v1/signup`            | No     | Register a user (username, password)                |
-| POST   | `/api/v1/signin`            | No     | Log in, returns JWT                                 |
-| POST   | `/api/v1/content`           | Yes    | Add content (title, link, type, [tags])             |
-| GET    | `/api/v1/content`           | Yes    | Get logged-in user's content                        |
-| DELETE | `/api/v1/content`           | Yes    | Delete content (by contentId)                       |
-| POST   | `/api/v1/brain/share`       | Yes    | Generate / revoke your shareable “brain” link       |
-| GET    | `/api/v1/brain/:shareLink`  | No     | Public view of user’s shared “brain” by share hash  |
-
-> ⚠️ Pass your JWT as an `Authorization` header for secured routes.
-
-### Database Models
-
-- **User:** `{ username, password }`
-- **Content:** `{ title, link, tags, type, userId }`
-- **Link:** `{ hash, userId }`
-
-### Environment Variables
-
-- MongoDB Atlas credentials in `/src/db.ts` (hardcoded; set your cluster details for production)
-- JWT secret in `/src/config.ts` (default is `"123123"`, change for security)
-- Server port defaults to `3000`
+```text
+├── Second-Brain-Frontend/  # React, Vite, Tailwind CSS
+├── Second-Brain-Backend/   # Node.js, Express, MongoDB, TypeScript
+└── README.md
+```
 
 ---
 
-## Frontend (Second-Brain-Frontend)
-
-- Built with React, TypeScript, Vite, and Tailwind CSS
-- App structure includes:
-  - `/src/assets`
-  - `/src/components`
-  - `/src/hooks`
-  - `/src/icons`
-  - `/src/pages` (e.g., SignIn, SignUp, Dashboard)
-- Reusable UI: Button, Card, Sidebar, Input, Icons
-- Connects with backend API for user/content management
-
----
-
-## Getting Started
-
-#### Prerequisites
-
-- Node.js v16+ and npm (or yarn/pnpm)
-- MongoDB Atlas cluster (or local Mongo instance)
-- Git
-
-#### Installation
-
-1. **Clone the repo:**
-    ```
-    git clone https://github.com/Princeag1310/Second-Brain.git
-    ```
-
-2. **Install frontend dependencies:**
-    ```
-    cd Second-Brain-Frontend
-    npm install
-    ```
-
-3. **Install backend dependencies:**
-    ```
-    cd ../Second-Brain-Backend
-    npm install
-    ```
-
-#### Run in Development
+## 💻 Tech Stack
 
 **Frontend:**
-cd Second-Brain-Frontend
-npm run dev
-
-text
-> Defaults to http://localhost:5173
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS (with arbitrary value support and custom utilities)
+- Framer Motion (for micro-animations and page transitions)
+- Axios & React Router
+- Lucide React (Icons)
 
 **Backend:**
+- Node.js & Express
+- TypeScript
+- MongoDB (Mongoose)
+- Zod (Input Validation)
+- JWT (Authentication)
+- bcrypt (Password Hashing)
+- link-preview-js (Open Graph Scraping with SSRF protection)
+
+---
+
+## 🔌 API Endpoints (Backend)
+
+| Method | Route                       | Auth | Description                                         |
+|--------|-----------------------------|------|-----------------------------------------------------|
+| POST   | `/api/v1/signup`            | No   | Register a new user                                 |
+| POST   | `/api/v1/signin`            | No   | Authenticate and return JWT token                   |
+| POST   | `/api/v1/content`           | Yes  | Add content (title, link, type)                     |
+| GET    | `/api/v1/content`           | Yes  | Get all content for the authenticated user          |
+| DELETE | `/api/v1/content`           | Yes  | Delete a specific content item                      |
+| POST   | `/api/v1/preview`           | No   | Securely scrape a URL and return Open Graph data    |
+| POST   | `/api/v1/brain/share`       | Yes  | Generate or revoke your public shareable link       |
+| GET    | `/api/v1/brain/:shareLink`  | No   | Fetch a user's public content via their share hash  |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- A MongoDB URI (Local or MongoDB Atlas)
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Princeag1310/Second-Brain.git
+cd Second-Brain
+```
+
+### 2. Backend Setup
+```bash
 cd Second-Brain-Backend
-npx ts-node src/index.ts
+npm install
+```
 
-text
-> Defaults to http://localhost:3000
+Create a `.env` file in the `Second-Brain-Backend` directory:
+```env
+PORT=3000
+MONGODB_URI=your_mongodb_connection_string
+JWT_PASSWORD=your_super_secret_jwt_key
+```
 
-#### Environment Setup
+Start the backend server:
+```bash
+npm run dev
+```
+*The server will start on http://localhost:3000*
 
-- Edit `src/db.ts` to configure your MongoDB connection string.
-- Change JWT secret in `src/config.ts` before production use.
+### 3. Frontend Setup
+Open a new terminal window:
+```bash
+cd Second-Brain-Frontend
+npm install
+```
+
+Create a `.env` file in the `Second-Brain-Frontend` directory if you need to override the API URL:
+```env
+VITE_BACKEND_URL=http://localhost:3000
+```
+
+Start the frontend development server:
+```bash
+npm run dev
+```
+*The app will be available at http://localhost:5173*
 
 ---
 
-## Scripts
+## 🌍 Deployment
 
-| Script                | Where      | What it does                   |
-|-----------------------|------------|--------------------------------|
-| npm run dev           | Frontend   | Start dev server (Vite)        |
-| npm run build         | Frontend   | Production build               |
-| npx ts-node src/index.ts | Backend | Start backend (TypeScript)     |
+**Frontend:**
+Optimized for deployment on [Vercel](https://vercel.com/) or Netlify. Make sure to set the `VITE_BACKEND_URL` environment variable to your deployed backend URL.
 
----
-
-## Deployment
-
-- Frontend: Deploy static build with [Vercel](https://vercel.com/), [Netlify](https://www.netlify.com/), etc.
-- Backend: Deploy on [Render](https://render.com/), [Heroku](https://heroku.com/), or your preferred Node host.
+**Backend:**
+Optimized for deployment on [Render](https://render.com/) or Heroku. The application uses `npm run build` to compile TypeScript to JavaScript, and `npm start` to run the compiled output. Make sure to set `MONGODB_URI` and `JWT_PASSWORD` in your hosting provider's environment settings.
 
 ---
 
-## Contributing
-
-- Pull requests welcome! For major changes, open an issue for discussion first.
-
----
-
-**Enjoy organizing, tagging, and sharing your knowledge—your own “Second Brain” with Second-Brain!**
+## 📝 License
+This project is licensed under the MIT License.
