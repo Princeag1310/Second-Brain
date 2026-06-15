@@ -2,6 +2,7 @@ import { ExternalLink, Play, Trash2 } from "lucide-react";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { motion } from "framer-motion";
 import { cn } from "../utils/cn";
+import { useEffect } from "react";
 
 interface CardProps {
     title: string;
@@ -14,12 +15,22 @@ export function Card({ title, link, type, onDelete }: CardProps) {
     const isYoutube = type === "youtube";
     const isTwitter = type === "twitter";
 
+    useEffect(() => {
+        if (isTwitter) {
+            // @ts-ignore
+            if (window.twttr) {
+                // @ts-ignore
+                window.twttr.widgets.load();
+            }
+        }
+    }, [isTwitter, link]);
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -4 }}
-            className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-indigo-500/10 hover:border-slate-700 transition-all duration-300 w-full sm:w-[320px] max-w-sm"
+            className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-indigo-500/10 hover:border-slate-700 transition-all duration-300 w-full"
         >
             <div className="p-5 flex flex-col h-full">
                 <div className="flex items-start justify-between mb-4">

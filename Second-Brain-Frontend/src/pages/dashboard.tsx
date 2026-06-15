@@ -58,21 +58,23 @@ export function Dashboard() {
           onClose={() => setModalOpen(false)} 
         />
         
-        <header className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-8 py-5 flex items-center justify-between">
+        <header className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-4 md:px-8 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <h1 className="text-2xl font-bold tracking-tight">Your Brain</h1>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <Button 
               onClick={handleShare} 
               variant="secondary" 
               text="Share Brain" 
               startIcon={<Share2 className="w-4 h-4" />} 
+              className="whitespace-nowrap"
             />
             <Button 
               onClick={() => setModalOpen(true)} 
               variant="primary" 
               text="Add Content" 
               startIcon={<Plus className="w-4 h-4" />} 
+              className="whitespace-nowrap"
             />
           </div>
         </header>
