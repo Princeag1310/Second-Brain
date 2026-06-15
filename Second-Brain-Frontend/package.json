@@ -13,9 +13,13 @@
     "@tailwindcss/vite": "^4.1.10",
     "@types/axios": "^0.9.36",
     "axios": "^1.10.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.18.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.1.10"
   },
   "devDependencies": {

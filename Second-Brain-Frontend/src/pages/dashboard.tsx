@@ -1,60 +1,119 @@
-import { useEffect, useState } from 'react'
-// import '..App.css'
-
-import { Card } from '../components/Card'
-import { CreateContentModal } from '../components/CreateContentModal'
-import { PlusIcon } from '../icons/PlusIcon'
-import { ShareIcon } from '../icons/ShareIcon'
-// import '..index.css';
-import { Sidebar } from '../components/Sidebar'
-import { Button } from '../components/Button'
-import { useContent } from '../hooks/useContent'
-import { BACKEND_URL } from '../config'
-import axios from 'axios'
+import { useEffect, useState } from 'react';
+import { Card } from '../components/Card';
+import { CreateContentModal } from '../components/CreateContentModal';
+import { Sidebar } from '../components/Sidebar';
+import { Button } from '../components/Button';
+import { useContent } from '../hooks/useContent';
+import { BACKEND_URL } from '../config';
+import axios from 'axios';
+import { Plus, Share2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function Dashboard() {
-
   const [modalOpen, setModalOpen] = useState(false);
-  const {contents, refresh} = useContent();
+  const { contents, refresh } = useContent();
 
-  useEffect(()=> {
-    refresh()
-  }, [modalOpen])
+  useEffect(() => {
+    refresh();
+  }, [modalOpen, refresh]);
 
-  return <div>
-    <Sidebar />
-    <div className = "p-4 ml-72 min-h-screen bg-gray-100 border-2 border-gray-200">
-      <CreateContentModal open={modalOpen} onClose = {() => {
-        setModalOpen(false);
-      }}/>
-      <div className = "flex justify-end gap-4">
-        <Button onClick = {() => {
-          setModalOpen(true);
-        }} variant = "primary" text = "Add Content" startIcon={<PlusIcon />} />
-        <Button onClick = {async () => {
-            const response = await axios.post(`${BACKEND_URL}/api/v1/brain/share`, {
-                share:true
-            }, {
-                headers: {
-                    "authorization": localStorage.getItem("token")
-                }
-            })
-            const shareUrl = `http://localhost:5173/share/${(response.data as any).hash}`
-            alert(shareUrl)
-        }} variant = "secondary" text = "Share Brain" startIcon={<ShareIcon />} />
-      </div>
+  async function handleDelete(contentId: string) {
+    try {
+      await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+        data: { contentId },
+        headers: {
+          authorization: localStorage.getItem("token")
+        }
+      } as any);
+      refresh();
+    } catch (e) {
+      console.error("Failed to delete content", e);
+    }
+  }
+
+  async function handleShare() {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/v1/brain/share`, {
+          share: true
+      }, {
+          headers: {
+              authorization: localStorage.getItem("token")
+          }
+      });
+      const shareUrl = `${window.location.origin}/share/${(response.data as any).hash}`;
+      navigator.clipboard.writeText(shareUrl);
+      alert(`Share link copied to clipboard!\n\n${shareUrl}`);
+    } catch (e) {
+      console.error("Failed to share brain", e);
+    }
+  }
+
+  return (
+    <div className="flex bg-slate-950 min-h-screen text-slate-50 font-sans selection:bg-indigo-500/30">
+      <Sidebar />
       
-
-      <div className = "flex gap-4 flex-wrap">
-
-        {contents.map(({type, link, title}) => 
-            <Card 
-            title = {title} 
-            type = {type as "youtube" | "twitter"} 
-            link = {link} 
+      <div className="flex-1 ml-72">
+        <CreateContentModal 
+          open={modalOpen} 
+          onClose={() => setModalOpen(false)} 
+        />
+        
+        <header className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-8 py-5 flex items-center justify-between">
+          <h1 className="text-2xl font-bold tracking-tight">Your Brain</h1>
+          
+          <div className="flex items-center gap-3">
+            <Button 
+              onClick={handleShare} 
+              variant="secondary" 
+              text="Share Brain" 
+              startIcon={<Share2 className="w-4 h-4" />} 
             />
-        )}
+            <Button 
+              onClick={() => setModalOpen(true)} 
+              variant="primary" 
+              text="Add Content" 
+              startIcon={<Plus className="w-4 h-4" />} 
+            />
+          </div>
+        </header>
+
+        <main className="p-8">
+          {contents.length === 0 ? (
+            <div className="flex flex-col items-center justify-center mt-32 text-center">
+              <div className="w-24 h-24 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-6">
+                <Plus className="w-10 h-10 text-slate-500" />
+              </div>
+              <h2 className="text-xl font-semibold text-slate-200 mb-2">It's empty in here</h2>
+              <p className="text-slate-400 mb-6 max-w-sm">
+                Start building your second brain by adding links to your favorite Youtube videos or Tweets.
+              </p>
+              <Button 
+                onClick={() => setModalOpen(true)} 
+                variant="primary" 
+                text="Add First Content" 
+                startIcon={<Plus className="w-4 h-4" />} 
+              />
+            </div>
+          ) : (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {contents.map(({ _id, type, link, title }) => (
+                <Card 
+                  key={_id}
+                  title={title} 
+                  type={type as "youtube" | "twitter"} 
+                  link={link} 
+                  onDelete={() => handleDelete(_id)}
+                />
+              ))}
+            </motion.div>
+          )}
+        </main>
       </div>
     </div>
-  </div>
+  );
 }
