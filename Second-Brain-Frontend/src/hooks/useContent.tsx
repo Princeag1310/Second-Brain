@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 
@@ -19,7 +19,7 @@ export function useContent() {
     const [contents, setContents] = useState<ContentItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    function refresh() {
+    const refresh = useCallback(() => {
         axios
             .get<ContentResponse>(`${BACKEND_URL}/api/v1/content`, {
                 headers: {
@@ -34,7 +34,7 @@ export function useContent() {
                 console.error("Failed to fetch content", err);
                 setIsLoading(false);
             });
-    }
+    }, []);
 
     useEffect(() => {
         refresh();
