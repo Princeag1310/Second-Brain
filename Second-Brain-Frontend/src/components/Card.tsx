@@ -70,26 +70,28 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                     </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative w-full">
+                <div className="w-full">
                     {isYoutube && (
-                        <iframe 
-                            className="w-full aspect-video" 
-                            src={link.replace("watch?v=", "embed/")} 
-                            title="YouTube video player" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen
-                        />
+                        <div className="rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative w-full">
+                            <iframe 
+                                className="w-full aspect-video" 
+                                src={link.replace("watch?v=", "embed/")} 
+                                title="YouTube video player" 
+                                frameBorder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                            />
+                        </div>
                     )}
                     {isTwitter && (
-                        <div className="w-full flex items-center justify-center">
-                            <blockquote className="twitter-tweet w-full !m-0" data-theme="dark">
+                        <div className="w-full flex justify-center">
+                            <blockquote className="twitter-tweet !m-0" data-theme="dark">
                                 <a href={link.replace("x.com", "twitter.com")}></a>
                             </blockquote>
                         </div>
                     )}
                     {!isYoutube && !isTwitter && (
-                        <div className="p-6 flex flex-col items-center justify-center h-full text-center text-slate-500 space-y-3 min-h-[200px]">
+                        <div className="rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative w-full p-6 flex flex-col items-center justify-center min-h-[200px] text-center text-slate-500 space-y-3">
                             <ExternalLink className="w-10 h-10 opacity-20" />
                             <a href={link} target="_blank" rel="noreferrer" className="text-sm hover:text-indigo-400 transition-colors break-all line-clamp-2">
                                 {link}
