@@ -32,7 +32,7 @@ export function Card({ title, link, type, onDelete }: CardProps) {
             whileHover={{ y: -4 }}
             className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-indigo-500/10 hover:border-slate-700 transition-all duration-300 w-full"
         >
-            <div className="p-5 flex flex-col h-full">
+            <div className="p-5 flex flex-col">
                 <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3 overflow-hidden">
                         <div className={cn(
@@ -70,7 +70,7 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                     </div>
                 </div>
 
-                <div className="flex-1 rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative">
+                <div className="rounded-xl overflow-hidden bg-slate-950/50 border border-slate-800 relative w-full">
                     {isYoutube && (
                         <iframe 
                             className="w-full aspect-video" 
@@ -82,8 +82,8 @@ export function Card({ title, link, type, onDelete }: CardProps) {
                         />
                     )}
                     {isTwitter && (
-                        <div className="p-4 flex items-center justify-center w-full min-h-[200px]">
-                            <blockquote className="twitter-tweet w-full" data-theme="dark">
+                        <div className="w-full flex items-center justify-center">
+                            <blockquote className="twitter-tweet w-full !m-0" data-theme="dark">
                                 <a href={link.replace("x.com", "twitter.com")}></a>
                             </blockquote>
                         </div>

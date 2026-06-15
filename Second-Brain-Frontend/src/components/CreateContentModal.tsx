@@ -95,7 +95,7 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
                                         fullWidth
                                     />
                                     <Button 
-                                        text="Twitter" 
+                                        text="X" 
                                         variant={type === ContentType.Twitter ? "primary" : "secondary"} 
                                         onClick={() => setType(ContentType.Twitter)}
                                         fullWidth

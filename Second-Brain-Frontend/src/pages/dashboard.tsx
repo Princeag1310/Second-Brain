@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [filter, setFilter] = useState("all");
   const { contents, refresh } = useContent();
 
   useEffect(() => {
@@ -48,9 +49,11 @@ export function Dashboard() {
     }
   }
 
+  const filteredContents = contents.filter(c => filter === "all" || c.type === filter);
+
   return (
     <div className="flex bg-slate-950 min-h-screen text-slate-50 font-sans selection:bg-indigo-500/30">
-      <Sidebar />
+      <Sidebar filter={filter} setFilter={setFilter} />
       
       <div className="flex-1 ml-72">
         <CreateContentModal 
@@ -80,19 +83,19 @@ export function Dashboard() {
         </header>
 
         <main className="p-8">
-          {contents.length === 0 ? (
+          {filteredContents.length === 0 ? (
             <div className="flex flex-col items-center justify-center mt-32 text-center">
               <div className="w-24 h-24 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mb-6">
                 <Plus className="w-10 h-10 text-slate-500" />
               </div>
               <h2 className="text-xl font-semibold text-slate-200 mb-2">It's empty in here</h2>
               <p className="text-slate-400 mb-6 max-w-sm">
-                Start building your second brain by adding links to your favorite Youtube videos or Tweets.
+                {filter === "all" ? "Start building your second brain by adding links to your favorite Youtube videos or Tweets." : `You don't have any ${filter === 'twitter' ? 'X' : 'YouTube'} content yet.`}
               </p>
               <Button 
                 onClick={() => setModalOpen(true)} 
                 variant="primary" 
-                text="Add First Content" 
+                text="Add Content" 
                 startIcon={<Plus className="w-4 h-4" />} 
               />
             </div>
@@ -103,7 +106,7 @@ export function Dashboard() {
               transition={{ staggerChildren: 0.1 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {contents.map(({ _id, type, link, title }) => (
+              {filteredContents.map(({ _id, type, link, title }) => (
                 <Card 
                   key={_id}
                   title={title} 

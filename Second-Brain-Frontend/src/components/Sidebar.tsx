@@ -4,7 +4,7 @@ import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { SidebarItem } from "./SidebarItem";
 import { useNavigate } from "react-router-dom";
 
-export function Sidebar() {
+export function Sidebar({ filter, setFilter }: { filter: string, setFilter: (val: string) => void }) {
     const navigate = useNavigate();
 
     return (
@@ -24,15 +24,20 @@ export function Sidebar() {
                 <SidebarItem 
                     text="All Content" 
                     icon={<LayoutGrid className="w-5 h-5" />} 
-                    active={true}
+                    active={filter === "all"}
+                    onClick={() => setFilter("all")}
                 />
                 <SidebarItem 
-                    text="Twitter" 
-                    icon={<div className="w-5 h-5"><TwitterIcon /></div>} 
+                    text="X" 
+                    icon={<div className="w-5 h-5 flex items-center justify-center"><TwitterIcon /></div>} 
+                    active={filter === "twitter"}
+                    onClick={() => setFilter("twitter")}
                 />
                 <SidebarItem 
                     text="YouTube" 
                     icon={<div className="w-5 h-5"><YoutubeIcon /></div>} 
+                    active={filter === "youtube"}
+                    onClick={() => setFilter("youtube")}
                 />
             </div>
 
