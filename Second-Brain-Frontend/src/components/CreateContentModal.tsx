@@ -42,12 +42,21 @@ export function CreateContentModal({ open, onClose }: { open: boolean, onClose: 
             return;
         }
 
+        let finalType = type;
+        if (type === ContentType.Link) {
+            if (link.includes("youtube.com") || link.includes("youtu.be")) {
+                finalType = ContentType.Youtube;
+            } else if (link.includes("twitter.com") || link.includes("x.com")) {
+                finalType = ContentType.Twitter;
+            }
+        }
+
         setSubmitting(true);
         try {
             await axios.post(`${BACKEND_URL}/api/v1/content`, {
                 link,
                 title,
-                type
+                type: finalType
             }, {
                 headers: {
                     "authorization": localStorage.getItem("token")
