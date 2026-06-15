@@ -12,6 +12,7 @@ import { userMiddleware } from './middleware';
 import { random } from './utils';
 import cors from "cors";
 import { getLinkPreview } from 'link-preview-js';
+import dns from 'dns';
 
 dotenv.config();
 
@@ -197,7 +198,19 @@ app.post("/api/v1/preview", async (req, res) => {
     try {
         const preview = await getLinkPreview(url, {
             timeout: 5000,
-            followRedirects: 'follow'
+            followRedirects: 'follow',
+            resolveDNSHost: async (url: string) => {
+                return new Promise((resolve, reject) => {
+                    const hostname = new URL(url).hostname;
+                    dns.lookup(hostname, (err, address) => {
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
+                        resolve(address);
+                    });
+                });
+            }
         });
         res.json(preview);
     } catch (e) {
